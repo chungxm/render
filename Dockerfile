@@ -3,12 +3,12 @@ FROM ubuntu:22.04
 
 #安装 shellinabox
 RUN apt-get update && 
-    apt-get install -y shellinabox && 
+    apt-get install -y --no-install-recommends shellinabox && 
     apt-get clean && 
-    rm -rf /var/lib/apt/lists/ /var/tmp/
+    rm -rf /var/lib/apt/lists/* /var/tmp/*
 
-#设置root用户的密码为“root”
-RUN echo "root:frepai" | chpasswd
+#设置root用户的密码为“chungxm”
+RUN echo "root:chungxm" | chpasswd
 
 #暴露22端口
 EXPOSE  22
