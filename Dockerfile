@@ -1,17 +1,17 @@
-#使用Ubuntu 22.04作为基础镜像
+# 基于 Ubuntu 22.04
 FROM ubuntu:22.04
 
-#安装 shellinabox
-RUN apt-get update && 
-    apt-get install -y --no-install-recommends shellinabox && 
-    apt-get clean && 
-    rm -rf /var/lib/apt/lists/* /var/tmp/*
+# 更新软件包列表
+RUN apt-get update
 
-#设置root用户的密码为“chungxm”
-RUN echo "root:chungxm" | chpasswd
+# 安装 shellinabox
+RUN apt-get install -y shellinabox
 
-#暴露22端口
-EXPOSE  22
+# 设置 root 用户的密码
+RUN echo 'root:chungxm' | chpasswd
 
-#启动 shellinabox
-CMD ["/usr/bin/shellinaboxd","-t","-s","/:LOGIN"]
+# 设置 shellinabox 的端口
+RUN sed -i 's/SHELLINABOX_PORT=4200/SHELLINABOX_PORT=22/g' /etc/default/shellinabox
+
+# 开启 shellinabox 服务
+CMD service shellinabox start && bash
